@@ -1,27 +1,18 @@
 import { BrowserRouter, Routes, Route } from "react-router-dom";
-import { Toaster } from "@/components/ui/toaster";
-import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
-import ChatPage from "@/pages/ChatPage";
-import LoginPage from "@/pages/LoginPage";
-import RegisterPage from "@/pages/RegisterPage";
-import { AuthProvider } from "@/context/AuthContext";
-
-const queryClient = new QueryClient();
+import { Toaster } from "sonner";
+import Login from "./pages/Login";
 
 function App() {
   return (
-    <QueryClientProvider client={queryClient}>
-      <AuthProvider>
-        <BrowserRouter>
-          <Routes>
-            <Route path="/" element={<ChatPage />} />
-            <Route path="/login" element={<LoginPage />} />
-            <Route path="/register" element={<RegisterPage />} />
-          </Routes>
-          <Toaster />
-        </BrowserRouter>
-      </AuthProvider>
-    </QueryClientProvider>
+    <BrowserRouter>
+      <Toaster position="top-center" richColors />
+      <Routes>
+        <Route path="/" element={<div className="p-8">Home Page</div>} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<div className="p-8">Register Page (Coming Soon)</div>} />
+        <Route path="/forgot-password" element={<div className="p-8">Forgot Password Page (Coming Soon)</div>} />
+      </Routes>
+    </BrowserRouter>
   );
 }
 
