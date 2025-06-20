@@ -1,99 +1,47 @@
-import { Link } from "react-router-dom";
-import { ArrowRight, Code, LucideMonitor, MessagesSquare } from "lucide-react";
-import { Button } from "@/components/ui/button";
-import { Card, CardContent, CardDescription, CardHeader, CardTitle } from "@/components/ui/card";
+import React from 'react';
+import { AuthStatus } from '@/components/AuthStatus';
+import { useAuthStore } from '@/lib/auth';
 
-const Home = () => {
+export default function Home() {
+  const { user, isAuthenticated } = useAuthStore();
+
   return (
-    <div>
-      {/* Hero Section */}
-      <section className="py-20 md:py-28 bg-gradient-to-b from-slate-100 to-slate-50 dark:from-slate-900 dark:to-slate-950">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h1 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl lg:text-6xl">
-                Hi, I'm <span className="text-primary">John Doe</span>
-              </h1>
-              <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                Full Stack Developer specializing in building exceptional
-                digital experiences
-              </p>
-            </div>
-            <div className="space-x-4">
-              <Button asChild>
-                <Link to="/projects">
-                  View My Work <ArrowRight className="ml-2 h-4 w-4" />
-                </Link>
-              </Button>
-              <Button variant="outline" asChild>
-                <Link to="/contact">Contact Me</Link>
-              </Button>
-            </div>
+    <div className="min-h-screen p-8">
+      <header className="container mx-auto flex items-center justify-between py-6">
+        <div className="text-2xl font-bold">MyApp</div>
+        <AuthStatus />
+      </header>
+      
+      <main className="container mx-auto mt-12 px-4">
+        <div className="mx-auto max-w-3xl text-center">
+          <h1 className="text-4xl font-bold tracking-tight sm:text-5xl">
+            Welcome to MyApp
+          </h1>
+          
+          <p className="mt-6 text-lg leading-8 text-muted-foreground">
+            {isAuthenticated 
+              ? `Hello, ${user?.name}! You are now logged in.`
+              : 'Please log in or register to get started.'}
+          </p>
+          
+          <div className="mt-10">
+            {isAuthenticated ? (
+              <div className="rounded-lg bg-card p-6 shadow-sm">
+                <h2 className="text-xl font-semibold">Your Account Information</h2>
+                <div className="mt-4 text-left">
+                  <p><span className="font-medium">Name:</span> {user?.name}</p>
+                  <p><span className="font-medium">Email:</span> {user?.email}</p>
+                  <p><span className="font-medium">Account ID:</span> {user?.id}</p>
+                </div>
+              </div>
+            ) : (
+              <div className="text-muted-foreground">
+                Sign in to see your account details
+              </div>
+            )}
           </div>
         </div>
-      </section>
-
-      {/* Services Section */}
-      <section className="py-16 md:py-24">
-        <div className="container px-4 md:px-6">
-          <div className="flex flex-col items-center justify-center space-y-4 text-center">
-            <div className="space-y-2">
-              <h2 className="text-3xl font-bold tracking-tighter sm:text-4xl md:text-5xl">
-                My Services
-              </h2>
-              <p className="mx-auto max-w-[700px] text-gray-500 md:text-xl dark:text-gray-400">
-                I offer a range of services to help your business succeed online
-              </p>
-            </div>
-          </div>
-          <div className="grid grid-cols-1 md:grid-cols-3 gap-6 mt-12">
-            <Card>
-              <CardHeader>
-                <Code className="h-10 w-10 mb-2 text-primary" />
-                <CardTitle>Web Development</CardTitle>
-                <CardDescription>
-                  Building responsive and performant websites and web applications
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  I create custom websites that are fast, secure, and built with best practices. From simple landing pages to complex web applications.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <LucideMonitor className="h-10 w-10 mb-2 text-primary" />
-                <CardTitle>UI/UX Design</CardTitle>
-                <CardDescription>
-                  Crafting beautiful, intuitive user interfaces and experiences
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  I design interfaces that are not only visually appealing but also provide a seamless user experience across all devices.
-                </p>
-              </CardContent>
-            </Card>
-            <Card>
-              <CardHeader>
-                <MessagesSquare className="h-10 w-10 mb-2 text-primary" />
-                <CardTitle>Consultation</CardTitle>
-                <CardDescription>
-                  Technical advice and planning for your digital projects
-                </CardDescription>
-              </CardHeader>
-              <CardContent>
-                <p>
-                  I provide expert consultation on web technologies, development strategies, and best practices to help you make informed decisions.
-                </p>
-              </CardContent>
-            </Card>
-          </div>
-        </div>
-      </section>
+      </main>
     </div>
   );
-};
-
-export default Home;
+}

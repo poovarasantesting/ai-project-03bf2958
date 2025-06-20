@@ -1,13 +1,18 @@
-import { LoginForm } from "./components/LoginForm";
-import { Toaster } from "@/components/ui/toaster";
+import { BrowserRouter, Routes, Route } from 'react-router-dom';
+import { Toaster } from '@/components/ui/toaster';
+import Login from '@/pages/Login';
+import Register from '@/pages/Register';
+import Home from '@/pages/Home';
 
-function App() {
+export default function App() {
   return (
-    <div className="min-h-screen flex items-center justify-center bg-slate-100 dark:bg-slate-900 p-4">
-      <LoginForm />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<Home />} />
+        <Route path="/login" element={<Login />} />
+        <Route path="/register" element={<Register />} />
+      </Routes>
       <Toaster />
-    </div>
+    </BrowserRouter>
   );
 }
-
-export default App;
