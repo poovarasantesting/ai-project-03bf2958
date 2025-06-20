@@ -1,14 +1,18 @@
-import { useState } from "react";
-import { Toaster } from "@/components/ui/toaster";
-import { ChatPage } from "@/components/ChatPage";
-import { ThemeProvider } from "@/components/ThemeProvider";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import Register from "./pages/auth/register";
+import Login from "./pages/auth/login";
+import { Toaster } from "./components/ui/toaster";
 
 function App() {
   return (
-    <ThemeProvider defaultTheme="system" storageKey="ui-theme">
-      <ChatPage />
+    <BrowserRouter>
+      <Routes>
+        <Route path="/" element={<div>Home Page</div>} />
+        <Route path="/auth/register" element={<Register />} />
+        <Route path="/auth/login" element={<Login />} />
+      </Routes>
       <Toaster />
-    </ThemeProvider>
+    </BrowserRouter>
   );
 }
 
