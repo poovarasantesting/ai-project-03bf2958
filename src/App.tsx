@@ -1,18 +1,28 @@
-import { BrowserRouter, Routes, Route } from 'react-router-dom';
-import { Toaster } from '@/components/ui/toaster';
-import Login from '@/pages/Login';
-import Register from '@/pages/Register';
-import Home from '@/pages/Home';
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+import { Toaster } from "@/components/ui/toaster";
+import { QueryClient, QueryClientProvider } from "@tanstack/react-query";
+import ChatPage from "@/pages/ChatPage";
+import LoginPage from "@/pages/LoginPage";
+import RegisterPage from "@/pages/RegisterPage";
+import { AuthProvider } from "@/context/AuthContext";
 
-export default function App() {
+const queryClient = new QueryClient();
+
+function App() {
   return (
-    <BrowserRouter>
-      <Routes>
-        <Route path="/" element={<Home />} />
-        <Route path="/login" element={<Login />} />
-        <Route path="/register" element={<Register />} />
-      </Routes>
-      <Toaster />
-    </BrowserRouter>
+    <QueryClientProvider client={queryClient}>
+      <AuthProvider>
+        <BrowserRouter>
+          <Routes>
+            <Route path="/" element={<ChatPage />} />
+            <Route path="/login" element={<LoginPage />} />
+            <Route path="/register" element={<RegisterPage />} />
+          </Routes>
+          <Toaster />
+        </BrowserRouter>
+      </AuthProvider>
+    </QueryClientProvider>
   );
 }
+
+export default App;
